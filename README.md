@@ -1,190 +1,158 @@
-# ProyectoSoftware
+# 🧩 ProyectoSoftware  
+## 🎯 Diseño de Producto — Fase 1
 
-# 🎯 Diseño de Producto — Fase 1
+---
 
-## Objetivo
-Repositorio de entregables de diseño para la Fase 1 del sistema de prácticas UDLAP.  
-Incluye: alcance, investigación, arquitectura, flujos, validación y UI final.
+## 🧭 Objetivo
 
-El objetivo principal es centralizar el proceso de prácticas en una sola plataforma, evitando confusión, pérdida de información y pasos innecesarios.
+Repositorio central de entregables de diseño para la **Fase 1 del sistema de prácticas UDLAP**.
+
+Incluye:
+- Alcance del producto  
+- Investigación de usuarios  
+- Arquitectura de información  
+- Flujos y procesos  
+- Validación (testing UX)  
+- Interfaz final (UI)
+
+**Objetivo principal:**  
+Centralizar el proceso de prácticas en una sola plataforma, reduciendo confusión, pérdida de información y pasos innecesarios.
 
 ---
 
 ## 🛠️ Stack de trabajo
 
-- **Docs:** Markdown en GitHub  
-- **Diagramas:** draw.io / diagrams.net  
-- **UI y prototipo:** Figma  
-- **Seguimiento:** GitHub Issues + GitHub Projects  
+- **Documentación:** Markdown (GitHub)  
+- **Diagramas:** draw.io  
+- **UI / Prototipos:** Figma  
+- **Gestión:** GitHub Issues + GitHub Projects  
 
 ---
 
 ## 👥 Equipo
 
-### U1 — UX Research / Producto (Dani)
-- Lidera investigación con usuarios (estudiantes y coordinación)
-- Define necesidades (Jobs To Be Done)
-- Sintetiza insights
-- Valida flujos desde perspectiva usuario/negocio
-- Diseña plan de pruebas de usabilidad
+### 🧪 U1 — UX Research / Producto (Todos)
+- Lidera investigación con usuarios (estudiantes y coordinación)  
+- Define necesidades (Jobs To Be Done)  
+- Sintetiza insights  
+- Valida flujos desde perspectiva usuario
+- Diseña plan de pruebas de usabilidad  
 
 ---
 
-### U2 — UI/UX Design (Naia)
-- Diseña wireframes y UI de alta fidelidad
-- Define arquitectura visual
-- Crea prototipo navegable
+### 🎨 U2 — UI/UX Design (Todos)
+- Diseña wireframes y UI de alta fidelidad  
+- Define arquitectura visual  
+- Crea prototipo navegable  
 - Mantiene UI Kit / componentes
-- Prepara handoff a desarrollo
 
 ---
 
-### T1 — Product / Tech Analyst (Mike)
-- Traduce necesidades a requisitos funcionales
-- Define reglas de negocio y validaciones
-- Gestiona backlog (GitHub Issues)
-- Define RBAC (roles y permisos)
-- Asegura consistencia entre diseño y sistema
+### ⚙️ T1 — Product / Tech Analyst (Todos)
+- Traduce necesidades a requisitos funcionales  
+- Define reglas de validaciones  
+- Gestiona backlog (GitHub Issues)  
+- Define RBAC (roles y permisos - estudiante o persona de los de prácticas)  
+- Asegura consistencia diseño–sistema  
 
 ---
 
-### T2 — Tech Lead / Sistemas (Bruno)
-- Define arquitectura del sistema
-- Modela dominio (entidades y relaciones)
-- Diseña procesos complejos (BPMN / estados)
-- Evalúa viabilidad técnica
-- Define integraciones
+### 🏗️ T2 — Tech Lead / Sistemas (Mike)
+- Define arquitectura del sistema  
+- Modela dominio (entidades y relaciones)  
+- Diseña procesos 
+- Evalúa viabilidad técnica  
+- Define integraciones  
 
 ---
 
-### PM — Project Manager (Iván)
-- Coordina tareas diarias
-- Prioriza backlog
-- Da seguimiento en GitHub Projects
-- Gestiona bloqueos
-- Alinea con stakeholders
-- Controla tiempos y entregables
+### 📌 PM — Project Manager (No sé)
+- Coordina tareas diarias  
+- Prioriza backlog  
+- Da seguimiento en GitHub Projects  
+- Gestiona bloqueos  
+- Controla tiempos y entregables  (kanban)
 
 ---
 
-## 📊 Tabla RACI — Fase 1 (2 semanas / 10 días hábiles)
-
-### Leyenda
-- **R:** Responsable (ejecuta)  
-- **A:** Accountable (dueño final)  
-- **C:** Consultado  
-- **I:** Informado  
+## 📊 Recabación de información — Fase 1  
+**Duración:** 2 semanas (7 días hábiles)
 
 ---
 
-| Día | Entregable | Owner | U1 | U2 | T1 | T2 |
-|-----|----------|------|----|----|----|----|
-| 1 | Brief de producto (1-pager) | U1 | A/R | C | C | I |
-| 1 | Backlog priorizado + decisiones | T1 | C | I | A/R | C |
-| 1 | Stakeholders y ecosistema | T2 | C | I | C | A/R |
-| 2 | Plan de entrevistas | U1 | A/R | R | C | C |
-| 3–4 | Síntesis de entrevistas | U1 | A/R | R | C | I |
-| 3–4 | Personas | U2 | C | A/R | I | I |
-| 4 | Jobs To Be Done / Casos de uso | T1 | C | I | A/R | C |
-| 5 | Sitemap / IA | U2 | R | A/R | C | C |
-| 5 | Modelo de dominio | T2 | I | I | C | A/R |
-| 5 | RBAC (roles y permisos) | T1 | I | I | A/R | C |
-| 5 | Funcionalidades por plan (opcional) | T1 | I | C | A/R | C |
-| 6 | User flows | U1 | A/R | R | C | C |
-| 7 | BPMN / procesos | T1 | C | I | A/R | R |
-| 7 | State machine | T2 | I | I | C | A/R |
-| 6–7 | Reglas y validaciones | T1 | C | C | A/R | R |
-| 8 | Plan de pruebas UX | U1 | A/R | R | C | I |
-| 9 | Reporte de testing | T1 | R | C | A/R | C |
-| 10 | UI final (alta fidelidad) | U2 | C | A/R | R | R |
+## ⚙️ Operación por equipos
+
+### 🎨 Equipo de Diseño (todos)
+Responsable de:
+- Investigación (entrevistas)  
+- Síntesis de insights  
+- Definición de personas  
+- Arquitectura (sitemap)  
+- Diseño de flujos  
+- Testing UX  
+- UI final  
 
 ---
 
-## ⚙️ Nota operativa
-
-### 🎨 Equipo de diseño (U1, U2)
-Lidera:
-- Investigación (entrevistas)
-- Síntesis
-- Personas
-- Arquitectura (sitemap)
-- Flujos
-- Testing UX
-- UI final
+### 🧠 Equipo Técnico (todos)
+Responsable de:
+- Requisitos funcionales  
+- Modelo de dominio  
+- RBAC  
+- Validaciones  
+- Consistencia del sistema  
 
 ---
 
-### 🧠 Equipo técnico (T1, T2)
-Lidera:
-- Requisitos
-- Modelo de dominio
-- RBAC
-- BPMN / estados
-- Validaciones
-- Consistencia funcional
+### Desglose
 
----
+1. **Base (Día 1)**
+   - Información de landing page 
 
-## 🔗 Dependencias críticas
-1–3 → 4–7 → 8–15 → 16–17 → 18
+2. **Investigación** (ya hecha en el prototipo)
+   - Entrevistas  
+   - Insights  
+   - Personas  
 
+3. **Division info del sistema** 
+   - Landing
+   - Preguntas frecuentes 
+   - Empresas disponibles  
+   - Guía paso a paso
+   - Contactos
+   - Documentos (copia de los originales)
 
-### Explicado en contexto del proyecto:
+4. **Validación** (ya hecha en el prototipo)
+   - Testing UX  
+   - Reporte  
 
-1. **Base (día 1):**
-   - Brief
-   - Backlog
-   - Stakeholders
-
-2. **Investigación:**
-   - Entrevistas
-   - Insights
-   - Personas
-
-3. **Estructura del sistema:**
-   - Arquitectura (sitemap)
-   - Modelo de dominio
-   - Roles
-   - Reglas
-
-4. **Flujos y lógica:**
-   - User flows
-   - BPMN
-   - Estados
-
-5. **Validación:**
-   - Testing UX
-   - Reporte
-
-6. **Resultado final:**
-   - UI completa
+6. **Resultado final**
+   - UI completa  (con info real y con los documentos oficiales)
 
 ---
 
 ## 🧠 Enfoque del proyecto
 
-Este diseño está enfocado en resolver los principales problemas detectados:
+El diseño responde a los principales problemas detectados:
 
+### Problemas
 - ❌ Información descentralizada  
 - ❌ Confusión en el proceso  
 - ❌ Falta de claridad en pasos  
 - ❌ Errores en seguimiento  
 
-➡️ Se prioriza:
-
-- Flujo principal de aplicación a prácticas  
-- Claridad del proceso  
-- Integridad de datos  
-- Usabilidad sin aprendizaje previo  
+### Prioridades
+- ✔️ Flujo principal de aplicación a prácticas  
+- ✔️ Claridad del proceso  
+- ✔️ Integridad de datos  
+- ✔️ Usabilidad sin curva de aprendizaje  
 
 ---
 
-## 🚀 Resultado esperado de Fase 1
+## 🚀 Resultado esperado — Fase 1 (ya hecho)
 
 - Prototipo navegable validado  
 - Flujos claros y optimizados  
 - Arquitectura definida  
 - Reglas del sistema documentadas  
-- UI lista para desarrollo  
-
----
+- UI lista para desarrollo
