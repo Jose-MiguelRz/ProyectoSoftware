@@ -40,7 +40,7 @@ Centralizar el proceso de prácticas en una sola plataforma, reduciendo confusi�
 
 ---
 
-### 🎨 U2 — UI/UX Design (Todos)
+### 🎨 U2 — UI/UX Design (Brandon)
 - Diseña wireframes y UI de alta fidelidad  
 - Define arquitectura visual  
 - Crea prototipo navegable  
@@ -66,7 +66,7 @@ Centralizar el proceso de prácticas en una sola plataforma, reduciendo confusi�
 
 ---
 
-### 📌 PM — Project Manager (No sé)
+### 📌 PM — Project Manager (Isa)
 - Coordina tareas diarias  
 - Prioriza backlog  
 - Da seguimiento en GitHub Projects  
@@ -94,7 +94,7 @@ Responsable de:
 
 ---
 
-### 🧠 Equipo Técnico (todos)
+### 🧠 Equipo Técnico (Ricky)
 Responsable de:
 - Requisitos funcionales  
 - Modelo de dominio  
