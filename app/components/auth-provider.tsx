@@ -1,8 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-
-interface User {
-  studentId: string;
-}
+import { User, MockDatabase } from "../constants/database";
 
 interface AuthContextType {
   user: User | null;
@@ -13,54 +10,40 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Credenciales de prueba mockup
-const MOCK_USERS = [
-  {
-    studentId: "123456",
-    password: "udlap123"
-  },
-  {
-    studentId: "987654",
-    password: "practicas123"
-  }
-];
-
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>({ studentId: "123456" }); // Usuario por defecto para testing
-  const [isLoading, setIsLoading] = useState(false); // No loading inicialmente
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const db = MockDatabase.getInstance();
 
   // Cargar usuario desde localStorage al montar
-  // useEffect(() => {
-  //   const savedUser = localStorage.getItem("udlap_auth_user");
-  //   if (savedUser) {
-  //     try {
-  //       setUser(JSON.parse(savedUser));
-  //     } catch (error) {
-  //       console.error("Error al cargar usuario:", error);
-  //       localStorage.removeItem("udlap_auth_user");
-  //     }
-  //   }
-  //   setIsLoading(false);
-  // }, []);
+  useEffect(() => {
+    const savedUser = localStorage.getItem("udlap_auth_user");
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (error) {
+        console.error("Error al cargar usuario:", error);
+        localStorage.removeItem("udlap_auth_user");
+      }
+    }
+    setIsLoading(false);
+  }, []);
 
   const login = async (studentId: string, password: string): Promise<{ success: boolean; error?: string }> => {
     // Simular delay de red
     await new Promise(resolve => setTimeout(resolve, 800));
 
-    const mockUser = MOCK_USERS.find(
-      u => u.studentId === studentId && u.password === password
-    );
-
-    if (mockUser) {
-      const userData = {
-        studentId: mockUser.studentId
-      };
-      setUser(userData);
-      localStorage.setItem("udlap_auth_user", JSON.stringify(userData));
-      return { success: true };
+    // Para demo: aceptar cualquier usuario/contraseña no vacíos
+    if (studentId.trim() && password.trim()) {
+      const result = db.authenticate(studentId, password);
+      if (result.success && result.user) {
+        setUser(result.user);
+        localStorage.setItem("udlap_auth_user", JSON.stringify(result.user));
+        return { success: true };
+      }
     }
 
-    return { success: false, error: "Credenciales incorrectas" };
+    return { success: false, error: "Credenciales inválidas" };
   };
 
   const logout = () => {
@@ -78,7 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth debe usarse dentro de un AuthProvider");
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }

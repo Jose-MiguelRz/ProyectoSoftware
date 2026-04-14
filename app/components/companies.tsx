@@ -6,23 +6,16 @@ import { Button } from "./button";
 import { Card } from "./card";
 import { InternshipApplicationForm } from "./internship-application-form";
 import { useStudentProfile } from "./student-profile-provider";
+import { useDatabase } from "./database-provider";
 import * as Dialog from "@radix-ui/react-dialog";
 import { toast } from "sonner";
 import { TOAST_MESSAGES, ACTIONS } from "../constants/design-tokens";
-
-interface Company {
-  id: number;
-  name: string;
-  industry: string;
-  location: string;
-  positions: number;
-  paid: boolean;
-  hours: string;
-  description: string;
-}
+import { Company } from "../constants/database";
 
 export function Companies() {
   const { profile, meetsInternshipRequirements, updateProfile } = useStudentProfile();
+  const db = useDatabase();
+  const [companies, setCompanies] = useState<Company[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>(() => {
     return localStorage.getItem("companies-search") || "";
   });
@@ -35,6 +28,12 @@ export function Companies() {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [isApplicationOpen, setIsApplicationOpen] = useState(false);
 
+  // Cargar empresas desde la base de datos
+  useEffect(() => {
+    const loadedCompanies = db.getCompanies();
+    setCompanies(loadedCompanies);
+  }, [db]);
+
   // Guardar búsqueda y filtros en localStorage
   useEffect(() => {
     localStorage.setItem("companies-search", searchTerm);
@@ -45,110 +44,8 @@ export function Companies() {
     localStorage.setItem("companies-filter-paid", filterPaid);
   }, [filterIndustry, filterPaid]);
 
-  const companies: Company[] = [
-    {
-      id: 1,
-      name: "Volkswagen México",
-      industry: "Automotriz",
-      location: "Puebla, Pue.",
-      positions: 5,
-      paid: true,
-      hours: "40 hrs/semana",
-      description: "Oportunidades en ingeniería, manufactura y logística. Ambiente multinacional con proyectos de innovación tecnológica."
-    },
-    {
-      id: 2,
-      name: "Audi México",
-      industry: "Automotriz",
-      location: "San José Chiapa, Pue.",
-      positions: 3,
-      paid: true,
-      hours: "40 hrs/semana",
-      description: "Prácticas en áreas de producción, calidad e ingeniería de procesos. Capacitación especializada incluida."
-    },
-    {
-      id: 3,
-      name: "IBM México",
-      industry: "Tecnología",
-      location: "Puebla, Pue. (Híbrido)",
-      positions: 8,
-      paid: true,
-      hours: "30-40 hrs/semana",
-      description: "Desarrollo de software, consultoría IT, análisis de datos y cloud computing. Modalidad flexible."
-    },
-    {
-      id: 4,
-      name: "PwC México",
-      industry: "Consultoría",
-      location: "Puebla, Pue.",
-      positions: 4,
-      paid: true,
-      hours: "40 hrs/semana",
-      description: "Auditoría, consultoría financiera y estratégica. Experiencia en clientes multinacionales."
-    },
-    {
-      id: 5,
-      name: "Hospital Ángeles Puebla",
-      industry: "Salud",
-      location: "Puebla, Pue.",
-      positions: 6,
-      paid: false,
-      hours: "30 hrs/semana",
-      description: "Prácticas en administración hospitalaria, nutrición, psicología y áreas médicas. Ambiente de aprendizaje profesional."
-    },
-    {
-      id: 6,
-      name: "FEMSA",
-      industry: "Consumo",
-      location: "Puebla, Pue.",
-      positions: 7,
-      paid: true,
-      hours: "40 hrs/semana",
-      description: "Oportunidades en mercadotecnia, ventas, logística y finanzas. Empresa líder en América Latina."
-    },
-    {
-      id: 7,
-      name: "Banco Santander",
-      industry: "Financiero",
-      location: "Puebla, Pue.",
-      positions: 3,
-      paid: true,
-      hours: "35 hrs/semana",
-      description: "Banca corporativa, análisis de riesgos, atención a clientes y productos financieros."
-    },
-    {
-      id: 8,
-      name: "ONG Educación para Todos",
-      industry: "Educación",
-      location: "Puebla, Pue.",
-      positions: 4,
-      paid: false,
-      hours: "20-30 hrs/semana",
-      description: "Programas educativos, desarrollo comunitario y gestión de proyectos sociales. Impacto social directo."
-    },
-    {
-      id: 9,
-      name: "Deloitte México",
-      industry: "Consultoría",
-      location: "Puebla, Pue.",
-      positions: 5,
-      paid: true,
-      hours: "40 hrs/semana",
-      description: "Auditoría, consultoría de negocios, asesoría fiscal y consultoría de riesgos."
-    },
-    {
-      id: 10,
-      name: "Google México",
-      industry: "Tecnología",
-      location: "Remoto",
-      positions: 2,
-      paid: true,
-      hours: "40 hrs/semana",
-      description: "Desarrollo de productos, marketing digital y análisis de datos. 100% remoto con mentoría internacional."
-    },
-  ];
-
   const industries = Array.from(new Set(companies.map((c) => c.industry)));
+
 
   const filteredCompanies = companies.filter((company) => {
     const matchesSearch =

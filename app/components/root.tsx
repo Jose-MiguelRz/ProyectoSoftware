@@ -25,16 +25,16 @@ export function Root() {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/");
   };
 
   const navigation = [
-    { name: "Inicio", href: "/", icon: Home },
-    { name: "Preguntas Frecuentes", href: "/preguntas-frecuentes", icon: HelpCircle },
-    { name: "Empresas Disponibles", href: "/empresas", icon: Building2 },
-    { name: "Guía Paso a Paso", href: "/guia", icon: BookOpen },
-    { name: "Contactos", href: "/contactos", icon: Users },
-    { name: "Documentos", href: "/documentos", icon: FileText },
+    { name: "Inicio", href: "/dashboard", icon: Home },
+    { name: "Preguntas Frecuentes", href: "/dashboard/preguntas-frecuentes", icon: HelpCircle },
+    { name: "Empresas Disponibles", href: "/dashboard/empresas", icon: Building2 },
+    { name: "Guía Paso a Paso", href: "/dashboard/guia", icon: BookOpen },
+    { name: "Contactos", href: "/dashboard/contactos", icon: Users },
+    { name: "Documentos", href: "/dashboard/documentos", icon: FileText },
   ];
 
   return (
