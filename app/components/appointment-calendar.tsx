@@ -2,7 +2,6 @@ import { useState } from "react";
 import { X, ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock } from "lucide-react";
 import { Button } from "./button";
 import { toast } from "sonner";
-import { TOAST_MESSAGES } from "../constants/design-tokens";
 
 interface AppointmentCalendarProps {
   isOpen: boolean;
@@ -27,6 +26,8 @@ export function AppointmentCalendar({ isOpen, onClose, contactName }: Appointmen
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [studentId, setStudentId] = useState("");
+  const [studentIdError, setStudentIdError] = useState("");
 
   if (!isOpen) return null;
 
@@ -77,7 +78,14 @@ export function AppointmentCalendar({ isOpen, onClose, contactName }: Appointmen
   };
 
   const handleConfirm = async () => {
+    if (!studentId.trim()) {
+      setStudentIdError("El ID del estudiante es obligatorio");
+      return;
+    }
+    
     if (!selectedDate || !selectedTime) return;
+
+    setStudentIdError("");
 
     const formattedDate = selectedDate.toLocaleDateString('es-MX', {
       weekday: 'long',
@@ -86,11 +94,31 @@ export function AppointmentCalendar({ isOpen, onClose, contactName }: Appointmen
       day: 'numeric'
     });
 
-    await new Promise(resolve => setTimeout(resolve, 800));
+    // Generar el mensaje de correo
+    const emailSubject = `Solicitud de Cita - Dudas de Prácticas - ${studentId}`;
+    const emailBody = `Hola,
+
+Me interesa agendar una cita para dudas de prácticas.
+
+Datos de la Cita:
+- ID del Estudiante: ${studentId}
+- Fecha Propuesta: ${formattedDate}
+- Hora Propuesta: ${selectedTime}
+
+Quedo atenta a su disponibilidad.
+
+Saludos,
+Estudiante UDLAP`;
+
+    // Crear el mailto link
+    const mailtoLink = `mailto:${contactName}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
     
-    const message = TOAST_MESSAGES.success.citaAgendada(contactName);
-    toast.success(message.title, {
-      description: `${formattedDate} a las ${selectedTime}`
+    // Abrir el cliente de correo
+    window.location.href = mailtoLink;
+    
+    // Mostrar un toast informativo
+    toast.success("Abriendo cliente de correo", {
+      description: `Se abrirá tu cliente de correo con la solicitud de cita para ${formattedDate} a las ${selectedTime}`
     });
 
     onClose();
@@ -117,7 +145,7 @@ export function AppointmentCalendar({ isOpen, onClose, contactName }: Appointmen
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-card rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="bg-gradient-to-r from-primary to-primary/90 text-white p-6 rounded-t-lg">
           <div className="flex items-start justify-between mb-2">
@@ -127,7 +155,7 @@ export function AppointmentCalendar({ isOpen, onClose, contactName }: Appointmen
             </div>
             <button
               onClick={onClose}
-              className="text-white hover:bg-white/20 rounded-full p-1 transition-colors"
+              className="text-white hover:bg-card/20 rounded-full p-1 transition-colors"
               aria-label="Cerrar"
             >
               <X size={24} />
@@ -141,7 +169,7 @@ export function AppointmentCalendar({ isOpen, onClose, contactName }: Appointmen
           <div className="flex items-center justify-between mb-6">
             <button
               onClick={goToPreviousMonth}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-muted rounded-lg transition-colors"
               aria-label="Mes anterior"
             >
               <ChevronLeft size={20} />
@@ -153,7 +181,7 @@ export function AppointmentCalendar({ isOpen, onClose, contactName }: Appointmen
             
             <button
               onClick={goToNextMonth}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-muted rounded-lg transition-colors"
               aria-label="Mes siguiente"
             >
               <ChevronRight size={20} />
@@ -192,8 +220,8 @@ export function AppointmentCalendar({ isOpen, onClose, contactName }: Appointmen
                       ${isSelected 
                         ? 'bg-primary text-white font-medium shadow-md' 
                         : isAvailable 
-                          ? 'bg-gray-50 hover:bg-primary/10 hover:border-primary border border-transparent' 
-                          : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                          ? 'bg-background hover:bg-primary/10 hover:border-primary border border-transparent' 
+                          : 'bg-muted text-muted-foreground cursor-not-allowed'
                       }
                       ${isToday && !isSelected ? 'ring-2 ring-primary/30' : ''}
                     `}
@@ -222,13 +250,37 @@ export function AppointmentCalendar({ isOpen, onClose, contactName }: Appointmen
                       py-3 px-4 rounded-lg text-sm transition-all border
                       ${selectedTime === time
                         ? 'bg-secondary text-white border-secondary shadow-md'
-                        : 'bg-gray-50 hover:bg-secondary/10 hover:border-secondary border-transparent'
+                        : 'bg-background hover:bg-secondary/10 hover:border-secondary border-transparent'
                       }
                     `}
                   >
                     {time}
                   </button>
                 ))}
+              </div>
+
+              {/* Student ID Input */}
+              <div className="mt-6 pt-6 border-t">
+                <label className="block text-sm font-medium mb-2">
+                  ID del Estudiante <span className="text-destructive">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={studentId}
+                  onChange={(e) => {
+                    setStudentId(e.target.value);
+                    setStudentIdError("");
+                  }}
+                  placeholder="Ingresa tu ID de estudiante"
+                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+                    studentIdError
+                      ? "border-destructive focus:ring-destructive/20"
+                      : "border-border focus:ring-primary focus:border-transparent"
+                  }`}
+                />
+                {studentIdError && (
+                  <p className="text-sm text-destructive mt-1">{studentIdError}</p>
+                )}
               </div>
             </div>
           )}
@@ -263,11 +315,11 @@ export function AppointmentCalendar({ isOpen, onClose, contactName }: Appointmen
                 <span>Fecha seleccionada</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded bg-gray-50 border border-gray-200"></div>
+                <div className="w-4 h-4 rounded bg-background border border-border"></div>
                 <span>Disponible</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded bg-gray-100"></div>
+                <div className="w-4 h-4 rounded bg-muted"></div>
                 <span>No disponible</span>
               </div>
             </div>
@@ -277,3 +329,4 @@ export function AppointmentCalendar({ isOpen, onClose, contactName }: Appointmen
     </div>
   );
 }
+

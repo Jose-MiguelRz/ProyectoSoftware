@@ -6,6 +6,7 @@ import { Companies } from "./components/companies";
 import { Guide } from "./components/guide";
 import { Contacts } from "./components/contacts";
 import { Documents } from "./components/documents";
+import { AccessibilitySettings } from "./components/accessibility-settings";
 import { Login } from "./components/login";
 
 export const router = createBrowserRouter([
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
       { path: "guia", Component: Guide },
       { path: "contactos", Component: Contacts },
       { path: "documentos", Component: Documents },
+      { path: "accesibilidad", Component: AccessibilitySettings },
     ],
   },
 ]);

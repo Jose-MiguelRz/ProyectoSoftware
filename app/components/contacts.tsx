@@ -91,7 +91,7 @@ export function Contacts() {
       </div>
 
       {/* General Contact Card */}
-      <div className="bg-gradient-to-r from-primary to-primary/90 rounded-lg p-6 sm:p-8 text-white">
+      <div className="bg-primary rounded-lg p-6 sm:p-8 text-white">
         <h2 className="text-2xl mb-4">Oficina de Prácticas Profesionales</h2>
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="flex items-start gap-3">
@@ -149,7 +149,7 @@ export function Contacts() {
                 </div>
               </div>
 
-              <div className="space-y-3 pt-4 border-t border-gray-100">
+              <div className="space-y-3 pt-4 border-t border-border">
                 <div className="flex items-start gap-3">
                   <Mail className="text-muted-foreground flex-shrink-0 mt-0.5" size={18} />
                   <div className="flex-1">

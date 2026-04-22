@@ -223,11 +223,11 @@ export function Guide() {
       },
       additionalContent: (
         <div className="space-y-4 mt-4">
-          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+          <div className="bg-background rounded-lg p-4 border border-border">
             <p className="text-sm text-muted-foreground mb-3">
               <strong>Actualizar registro:</strong> podrás modificar algunos datos personales y el contacto de emergencia; también podrás cancelar o activar tu registro solo si no has avanzado más allá del proceso.
             </p>
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <div className="bg-card rounded-lg p-4 border border-border">
               <h4 className="font-medium mb-2">Registro extemporáneo</h4>
               <p className="text-sm text-muted-foreground mb-3">
                 Si no realizaste el registro dentro del periodo, puedes solicitar registro extemporáneo solo dentro de fechas permitidas. La solicitud se envía a valoración del área.
@@ -305,7 +305,7 @@ export function Guide() {
       additionalContent: (
         <div className="space-y-4 mt-4">
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+            <div className="bg-background rounded-lg p-4 border border-border">
               <h4 className="font-medium mb-2">Cargar un CV (PDF)</h4>
               <ul className="space-y-1.5 text-sm text-muted-foreground mb-3">
                 <li className="flex items-start gap-2">
@@ -327,7 +327,7 @@ export function Guide() {
               </ul>
               <Button variant="primary" size="sm" className="w-full">Cargar y enviar a revisión</Button>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+            <div className="bg-background rounded-lg p-4 border border-border">
               <h4 className="font-medium mb-2">Capturar CV (en el sistema)</h4>
               <ul className="space-y-1.5 text-sm text-muted-foreground mb-3">
                 <li className="flex items-start gap-2">
@@ -354,11 +354,11 @@ export function Guide() {
               <Button variant="primary" size="sm" className="w-full">Capturar CV</Button>
             </div>
           </div>
-          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+          <div className="bg-background rounded-lg p-4 border border-border">
             <h4 className="font-medium mb-2">Estados del CV</h4>
             <div className="grid md:grid-cols-2 gap-2 text-sm">
               <div className="flex items-center gap-2">
-                <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs">Borrador</span>
+                <span className="px-2 py-1 bg-muted text-foreground rounded text-xs">Borrador</span>
                 <span className="text-muted-foreground">puedes continuar editando.</span>
               </div>
               <div className="flex items-center gap-2">
@@ -405,7 +405,7 @@ export function Guide() {
       },
       additionalContent: (
         <div className="space-y-4 mt-4">
-          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+          <div className="bg-background rounded-lg p-4 border border-border">
             <p className="text-sm text-muted-foreground mb-2">
               Ver organizaciones y proyectos disponibles.
             </p>
@@ -413,7 +413,7 @@ export function Guide() {
               Si tu carrera/materia lo permite, también puedes postularte a Autogestión o Equipo representativo.
             </p>
           </div>
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
+          <div className="bg-card rounded-lg p-4 border border-border">
             <h4 className="font-medium mb-2">Proponer organización</h4>
             <p className="text-sm text-muted-foreground mb-3">
               Puedes proponer una organización no listada. Al proponer, no podrás postularte a otro proyecto; debes esperar a que la organización registre datos, se registre el proyecto y sea aprobado por el comité.
@@ -643,7 +643,7 @@ export function Guide() {
               <div className="mt-3 space-y-1 text-sm">
                 <p className="text-muted-foreground">Estados posibles:</p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs">SIN INGRESAR</span>
+                  <span className="px-2 py-1 bg-muted text-foreground rounded text-xs">SIN INGRESAR</span>
                   <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs">PÓLIZA VIGENTE</span>
                   <span className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs">PÓLIZA VENCIDA</span>
                 </div>
@@ -822,7 +822,7 @@ export function Guide() {
               Solo si: Práctica finalizada + materia Prácticas 1 + tipo 'Práctica en organización'
             </p>
             <div className="space-y-3">
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+              <div className="bg-background rounded-lg p-3 border border-border">
                 <p className="text-sm font-medium mb-1">Opción 1: Realizar prácticas en otra organización</p>
                 <ul className="space-y-1 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
@@ -835,7 +835,7 @@ export function Guide() {
                   </li>
                 </ul>
               </div>
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+              <div className="bg-background rounded-lg p-3 border border-border">
                 <p className="text-sm font-medium mb-1">Opción 2: Continuar en el mismo proyecto u otro de la misma organización</p>
                 <ul className="space-y-1 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
@@ -848,7 +848,7 @@ export function Guide() {
                   </li>
                 </ul>
               </div>
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+              <div className="bg-background rounded-lg p-3 border border-border">
                 <p className="text-sm font-medium mb-1">Opción 3: Solicitar acreditar horas excedentes</p>
                 <ul className="space-y-1 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
@@ -936,8 +936,17 @@ export function Guide() {
 
   const handleSupportSubmit = () => {
     if (supportMessage.trim()) {
-      toast.success("Duda enviada", {
-        description: "Tu duda ha sido enviada al coordinador. Recibirás respuesta pronto."
+      // Crear correo con la duda
+      const emailSubject = "Duda sobre Guía de Prácticas Profesionales";
+      const emailBody = `Asunto: Duda sobre la Guía de Prácticas\n\n${supportMessage}\n\n---\nMensaje enviado desde el Sistema de Prácticas Profesionales UDLAP`;
+      
+      // Abrir cliente de correo
+      const mailtoLink = `mailto:practicas.profesionales@udlap.mx?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      window.location.href = mailtoLink;
+      
+      // Toast informativo
+      toast.success("Abriendo cliente de correo", {
+        description: "Se abrirá tu cliente de correo con tu duda lista para enviar."
       });
       setSupportMessage("");
       setShowSupportModal(false);
@@ -989,8 +998,8 @@ export function Guide() {
       case "Disponible": return "bg-blue-100 text-blue-700 border-blue-200";
       case "En revisión": return "bg-yellow-100 text-yellow-700 border-yellow-200";
       case "Con observaciones": return "bg-orange-100 text-orange-700 border-orange-200";
-      case "Bloqueado": return "bg-gray-100 text-gray-600 border-gray-200";
-      default: return "bg-gray-100 text-gray-600 border-gray-200";
+      case "Bloqueado": return "bg-muted text-muted-foreground border-border";
+      default: return "bg-muted text-muted-foreground border-border";
     }
   };
 
@@ -1016,7 +1025,7 @@ export function Guide() {
       <Breadcrumbs />
       
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-sm p-6">
+      <div className="bg-card rounded-lg shadow-sm p-6">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
           <div className="flex-1">
             <h1 className="text-3xl mb-2">Guía Paso a Paso</h1>
@@ -1024,7 +1033,7 @@ export function Guide() {
               Elige la vista que prefieras para avanzar.
             </p>
           </div>
-          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 min-w-[260px]">
+          <div className="bg-background rounded-lg p-4 border border-border min-w-[260px]">
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Progreso general:</span>
@@ -1041,7 +1050,7 @@ export function Guide() {
                   <span className="font-medium">{getCurrentStageStatus()}</span>
                 </div>
               )}
-              <div className="flex justify-between pt-2 border-t border-gray-200">
+              <div className="flex justify-between pt-2 border-t border-border">
                 <span className="text-muted-foreground">Próxima acción:</span>
               </div>
               <p className="text-xs text-primary font-medium">{getNextAction()}</p>
@@ -1051,14 +1060,14 @@ export function Guide() {
       </div>
 
       {/* Tab Selector */}
-      <div className="bg-white rounded-lg shadow-sm p-2">
+      <div className="bg-card rounded-lg shadow-sm p-2">
         <div className="flex gap-2">
           <button
             onClick={() => handleViewChange("quick")}
             className={`flex-1 px-4 py-3 rounded-lg transition-colors ${
               activeView === "quick"
                 ? "bg-primary text-white"
-                : "bg-gray-50 text-muted-foreground hover:bg-gray-100"
+                : "bg-background text-muted-foreground hover:bg-muted"
             }`}
           >
             <span className="font-medium">Guía rápida (8 pasos)</span>
@@ -1068,7 +1077,7 @@ export function Guide() {
             className={`flex-1 px-4 py-3 rounded-lg transition-colors ${
               activeView === "udlap"
                 ? "bg-primary text-white"
-                : "bg-gray-50 text-muted-foreground hover:bg-gray-100"
+                : "bg-background text-muted-foreground hover:bg-muted"
             }`}
           >
             <span className="font-medium">Proceso UDLAP (etapas)</span>
@@ -1107,7 +1116,7 @@ export function Guide() {
           )}
 
           {/* Progress Bar */}
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-card rounded-lg shadow-sm p-6">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <span className="text-sm">Progreso del Proceso</span>
@@ -1129,7 +1138,7 @@ export function Guide() {
                 )}
               </div>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-muted rounded-full h-2">
               <div
                 className="bg-primary h-2 rounded-full transition-all duration-300"
                 style={{ width: `${progressPercentage}%` }}
@@ -1151,13 +1160,13 @@ export function Guide() {
                 <div
                   key={step.id}
                   id={`step-${step.id}`}
-                  className={`bg-white rounded-lg shadow-sm overflow-hidden transition-all ${
+                  className={`bg-card rounded-lg shadow-sm overflow-hidden transition-all ${
                     isActive ? "ring-2 ring-primary" : ""
                   }`}
                 >
                   <button
                     onClick={() => setCurrentStep(step.id)}
-                    className="w-full p-6 flex items-start gap-4 hover:bg-gray-50 transition-colors text-left"
+                    className="w-full p-6 flex items-start gap-4 hover:bg-background transition-colors text-left"
                   >
                     <div className="flex-shrink-0">
                       {isCompleted ? (
@@ -1167,7 +1176,7 @@ export function Guide() {
                           className={`w-7 h-7 rounded-full flex items-center justify-center ${
                             isActive
                               ? "bg-primary text-white"
-                              : "bg-gray-200 text-gray-600"
+                              : "bg-muted text-muted-foreground"
                           }`}
                         >
                           <span>{step.id}</span>
@@ -1192,7 +1201,7 @@ export function Guide() {
                   </button>
 
                   {isActive && (
-                    <div className="px-6 pb-6 pt-2 border-t border-gray-100 bg-gray-50">
+                    <div className="px-6 pb-6 pt-2 border-t border-border bg-background">
                       <div className="flex items-center gap-2 mb-3">
                         <Info size={18} className="text-primary" />
                         <h3>Detalles del paso:</h3>
@@ -1209,7 +1218,7 @@ export function Guide() {
                         ))}
                       </ul>
 
-                      <div className="flex gap-3 mt-4 pt-4 border-t border-gray-200">
+                      <div className="flex gap-3 mt-4 pt-4 border-t border-border">
                         <Button
                           variant="outline"
                           onClick={handlePreviousStep}
@@ -1250,7 +1259,7 @@ export function Guide() {
           </div>
 
           {/* Timeline Summary */}
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-card rounded-lg shadow-sm p-6">
             <h2 className="text-xl mb-4">Tiempo Total Estimado</h2>
             <div className="flex items-center gap-4">
               <div className="flex-1">
@@ -1259,7 +1268,7 @@ export function Guide() {
                   Desde el inicio del proceso hasta la presentación final
                 </p>
               </div>
-              <div className="flex-1 border-l border-gray-200 pl-4">
+              <div className="flex-1 border-l border-border pl-4">
                 <div className="text-3xl text-secondary mb-1">480 horas</div>
                 <p className="text-sm text-muted-foreground">
                   Horas totales de práctica profesional requeridas
@@ -1272,11 +1281,29 @@ export function Guide() {
 
       {/* UDLAP Process View */}
       {activeView === "udlap" && (
-        <div className="grid md:grid-cols-[350px_1fr] gap-6">
-          {/* Desktop Stepper */}
-          <div className="hidden md:block">
-            <div className="bg-white rounded-lg shadow-sm p-6 sticky top-6">
-              <h3 className="font-medium mb-4">Etapas del proceso</h3>
+        <div className="space-y-6">
+          {/* Banner to System */}
+          <div className="bg-secondary rounded-lg p-6 text-white">
+            <h2 className="text-2xl font-bold mb-3">Ir al Sistema de Prácticas</h2>
+            <p className="text-white/90 mb-4">
+              Esta guía es un tutorial informativo. Para realizar tu solicitud de práctica, debes entrar al sistema oficial de UDLAP.
+            </p>
+            <a
+              href="https://aplicaciones.udlap.mx/SistemadePracticasUDLAPEstudiantes/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg transition-colors"
+            >
+              Acceder al Sistema
+              <ArrowRight size={20} />
+            </a>
+          </div>
+
+          <div className="grid md:grid-cols-[350px_1fr] gap-6">
+            {/* Desktop Stepper */}
+            <div className="hidden md:block">
+              <div className="bg-card rounded-lg shadow-sm p-6 sticky top-6">
+                <h3 className="font-medium mb-4">Etapas del proceso</h3>
               <div className="space-y-3">
                 {stages.map((stage, idx) => (
                   <button
@@ -1285,7 +1312,7 @@ export function Guide() {
                     className={`w-full text-left p-3 rounded-lg border transition-all ${
                       selectedStage === stage.id
                         ? "border-primary bg-primary/5"
-                        : "border-gray-200 hover:border-gray-300"
+                        : "border-border hover:border-border"
                     }`}
                   >
                     <div className="flex items-start gap-3">
@@ -1311,7 +1338,7 @@ export function Guide() {
                         </div>
                         {stage.status === "Bloqueado" && stage.blockReason && (
                           <TooltipWrapper content={stage.blockReason}>
-                            <div className="flex items-center gap-1 mt-1 text-xs text-gray-500">
+                            <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
                               <Lock size={12} />
                               <span className="truncate">{stage.blockReason}</span>
                             </div>
@@ -1330,10 +1357,10 @@ export function Guide() {
             {stages.map((stage) => {
               const isExpanded = expandedAccordions.includes(stage.id);
               return (
-                <div key={stage.id} className="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div key={stage.id} className="bg-card rounded-lg shadow-sm overflow-hidden">
                   <button
                     onClick={() => toggleAccordion(stage.id)}
-                    className="w-full p-4 flex items-start gap-3 text-left hover:bg-gray-50"
+                    className="w-full p-4 flex items-start gap-3 text-left hover:bg-background"
                   >
                     <div className="text-2xl flex-shrink-0">{stage.icon}</div>
                     <div className="flex-1 min-w-0">
@@ -1348,7 +1375,7 @@ export function Guide() {
                     </div>
                   </button>
                   {isExpanded && (
-                    <div className="p-4 pt-0 border-t border-gray-100">
+                    <div className="p-4 pt-0 border-t border-border">
                       <StageDetailPanel stage={stage} onJumpToQuickGuide={handleJumpToQuickGuide} />
                     </div>
                   )}
@@ -1360,11 +1387,12 @@ export function Guide() {
           {/* Desktop Detail Panel */}
           {currentStage && (
             <div className="hidden md:block">
-              <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="bg-card rounded-lg shadow-sm p-6">
                 <StageDetailPanel stage={currentStage} onJumpToQuickGuide={handleJumpToQuickGuide} />
               </div>
             </div>
           )}
+          </div>
         </div>
       )}
 
@@ -1380,13 +1408,13 @@ export function Guide() {
       {/* Support Modal */}
       {showSupportModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+          <div className="bg-card rounded-lg shadow-xl max-w-md w-full p-6">
             <h3 className="text-xl font-medium mb-4">Enviar duda</h3>
             <textarea
               value={supportMessage}
               onChange={(e) => setSupportMessage(e.target.value)}
               placeholder="Describe tu duda o pregunta..."
-              className="w-full border border-gray-300 rounded-lg p-3 min-h-[120px] resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full border border-border rounded-lg p-3 min-h-[120px] resize-none focus:outline-none focus:ring-2 focus:ring-primary"
             />
             <div className="flex gap-3 mt-4">
               <Button
@@ -1436,8 +1464,8 @@ function StageDetailPanel({ stage, onJumpToQuickGuide }: { stage: Stage; onJumpT
             case "Disponible": return "bg-blue-100 text-blue-700 border-blue-200";
             case "En revisión": return "bg-yellow-100 text-yellow-700 border-yellow-200";
             case "Con observaciones": return "bg-orange-100 text-orange-700 border-orange-200";
-            case "Bloqueado": return "bg-gray-100 text-gray-600 border-gray-200";
-            default: return "bg-gray-100 text-gray-600 border-gray-200";
+            case "Bloqueado": return "bg-muted text-muted-foreground border-border";
+            default: return "bg-muted text-muted-foreground border-border";
           }
         })()}`}>
           {stage.status}
@@ -1472,24 +1500,24 @@ function StageDetailPanel({ stage, onJumpToQuickGuide }: { stage: Stage; onJumpT
       )}
 
       {/* Actions */}
-      <div>
-        <h3 className="font-medium mb-3">Acciones</h3>
-        <div className="flex flex-wrap gap-2">
-          {stage.actions.primary && (
-            <Button
-              variant="primary"
-              disabled={stage.status === "Bloqueado"}
-            >
-              {stage.actions.primary.label}
-            </Button>
-          )}
-          {stage.actions.secondary?.map((action, idx) => (
-            <Button key={idx} variant="outline" size="sm">
-              {action.label}
-            </Button>
-          ))}
+      {stage.id === 1 && (
+        <div>
+          <h3 className="font-medium mb-3">Acciones</h3>
+          <div className="flex flex-wrap gap-2">
+            {stage.actions.primary && (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  window.location.href = "https://aplicaciones.udlap.mx/SistemadePracticasUDLAPEstudiantes/";
+                }}
+                disabled={stage.status === "Bloqueado"}
+              >
+                {stage.actions.primary.label}
+              </Button>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Documents */}
       {stage.documents && stage.documents.length > 0 && (
@@ -1508,7 +1536,7 @@ function StageDetailPanel({ stage, onJumpToQuickGuide }: { stage: Stage; onJumpT
 
       {/* Jump to Quick Guide */}
       {stageHasQuickGuide && (
-        <div className="pt-4 border-t border-gray-200">
+        <div className="pt-4 border-t border-border">
           <Button
             variant="outline"
             onClick={() => onJumpToQuickGuide(stage.id)}
@@ -1524,7 +1552,7 @@ function StageDetailPanel({ stage, onJumpToQuickGuide }: { stage: Stage; onJumpT
 
 function StageContentModule({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+    <div className="bg-background rounded-lg p-4 border border-border">
       <h4 className="font-medium mb-3">{title}</h4>
       {children}
     </div>
@@ -1545,7 +1573,7 @@ function DocumentCard({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-lg p-4 border border-gray-200">
+    <div className="bg-card rounded-lg p-4 border border-border">
       <div className="flex items-start justify-between gap-3 mb-2">
         <div className="flex items-start gap-2 flex-1">
           <FileText className="text-primary flex-shrink-0 mt-0.5" size={18} />
@@ -1564,7 +1592,7 @@ function DocumentCard({
               ? "bg-yellow-100 text-yellow-700 border-yellow-200"
               : status === "PÓLIZA VENCIDA"
               ? "bg-red-100 text-red-700 border-red-200"
-              : "bg-gray-100 text-gray-600 border-gray-200"
+              : "bg-muted text-muted-foreground border-border"
           }`}>
             {status}
           </span>
@@ -1581,3 +1609,4 @@ function DocumentCard({
     </div>
   );
 }
+

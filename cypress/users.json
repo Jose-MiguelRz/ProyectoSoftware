@@ -1,0 +1,23 @@
+{
+  "students": [
+    {
+      "studentId": "123456",
+      "password": "udlap123",
+      "name": "Juan Pérez",
+      "email": "juan.perez@udlap.mx"
+    },
+    {
+      "studentId": "987654",
+      "password": "practicas123",
+      "name": "María García",
+      "email": "maria.garcia@udlap.mx"
+    }
+  ],
+  "coordinators": [
+    {
+      "email": "coordinador@udlap.mx",
+      "password": "coord123",
+      "name": "Dr. Coordinador"
+    }
+  ]
+}

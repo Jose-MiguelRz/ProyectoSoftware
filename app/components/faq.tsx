@@ -98,7 +98,7 @@ export function FAQ() {
             className={`px-4 py-2 rounded-lg transition-colors ${
               selectedCategory === "all"
                 ? "bg-primary text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                : "bg-muted text-foreground hover:bg-muted"
             }`}
             aria-pressed={selectedCategory === "all"}
           >
@@ -113,7 +113,7 @@ export function FAQ() {
                 className={`px-4 py-2 rounded-lg transition-colors ${
                   selectedCategory === category
                     ? "bg-primary text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-muted text-foreground hover:bg-muted"
                 }`}
                 aria-pressed={selectedCategory === category}
               >
@@ -127,10 +127,10 @@ export function FAQ() {
       {/* FAQ List */}
       <div className="space-y-3">
         {filteredFAQs.map((faq, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-sm overflow-hidden">
+          <div key={index} className="bg-card rounded-lg shadow-sm overflow-hidden">
             <button
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors text-left"
+              className="w-full px-6 py-4 flex items-center justify-between hover:bg-background transition-colors text-left"
             >
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
@@ -157,7 +157,7 @@ export function FAQ() {
       </div>
 
       {filteredFAQs.length === 0 && (
-        <div className="text-center py-12 bg-white rounded-lg">
+        <div className="text-center py-12 bg-card rounded-lg">
           <p className="text-muted-foreground mb-4">No hay preguntas en esta categoría.</p>
           <button
             onClick={() => setSelectedCategory("all")}

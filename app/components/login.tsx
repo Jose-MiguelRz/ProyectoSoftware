@@ -46,7 +46,7 @@ export function Login() {
       <div className="w-full max-w-md">
         {/* Logo y título */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl shadow-lg mb-4">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-card rounded-2xl shadow-lg mb-4">
             <span className="text-primary text-4xl font-bold">U</span>
           </div>
           <h1 className="text-white text-3xl mb-2">Prácticas Profesionales</h1>
@@ -54,18 +54,18 @@ export function Login() {
         </div>
 
         {/* Card de login */}
-        <div className="bg-white rounded-2xl shadow-2xl p-8">
+        <div className="bg-card rounded-2xl shadow-2xl p-8">
           <h2 className="text-2xl text-secondary mb-6">Iniciar Sesión</h2>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Student ID input */}
             <div>
-              <label htmlFor="studentId" className="block text-sm mb-2 text-gray-700">
+              <label htmlFor="studentId" className="block text-sm mb-2 text-foreground">
                 ID de Estudiante
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-gray-400" />
+                  <User className="h-5 w-5 text-muted-foreground" />
                 </div>
                 <input
                   id="studentId"
@@ -81,12 +81,12 @@ export function Login() {
 
             {/* Password input */}
             <div>
-              <label htmlFor="password" className="block text-sm mb-2 text-gray-700">
+              <label htmlFor="password" className="block text-sm mb-2 text-foreground">
                 Contraseña
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-5 w-5 text-muted-foreground" />
                 </div>
                 <input
                   id="password"
@@ -100,7 +100,7 @@ export function Login() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground hover:text-muted-foreground transition-colors"
                   disabled={isLoading}
                 >
                   {showPassword ? (
@@ -139,10 +139,10 @@ export function Login() {
 
           {/* Credenciales de prueba */}
           <div className="mt-6 p-4 bg-accent rounded-lg border border-primary/20">
-            <p className="text-sm text-gray-700 mb-2 font-medium">
+            <p className="text-sm text-foreground mb-2 font-medium">
               Credenciales de prueba:
             </p>
-            <div className="space-y-1 text-xs text-gray-600">
+            <div className="space-y-1 text-xs text-muted-foreground">
               <p><strong>Usuario 1:</strong> ID: 123456 / udlap123</p>
               <p><strong>Usuario 2:</strong> ID: 987654 / practicas123</p>
             </div>
@@ -157,3 +157,4 @@ export function Login() {
     </div>
   );
 }
+

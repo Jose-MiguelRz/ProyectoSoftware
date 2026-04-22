@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AlertCircle, CheckCircle, Info } from "lucide-react";
+import { AlertCircle, CheckCircle } from "lucide-react";
 import { Button } from "./button";
 import { useStudentProfile } from "./student-profile-provider";
 import { toast } from "sonner";
@@ -17,9 +17,8 @@ export function InternshipApplicationForm({
 }: InternshipApplicationFormProps) {
   const { profile, meetsInternshipRequirements } = useStudentProfile();
   const [formData, setFormData] = useState({
-    email: profile.email,
+    studentId: "",
     phone: profile.phone,
-    startDate: "",
     motivation: "",
     availability: ""
   });
@@ -32,13 +31,10 @@ export function InternshipApplicationForm({
   // Validaciones en tiempo real
   const validateField = (name: string, value: string): string => {
     switch (name) {
-      case "email":
-        if (!value) return "El correo electrónico es obligatorio";
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          return "Ingresa un correo electrónico válido";
-        }
-        if (!value.endsWith("@udlap.mx")) {
-          return "Debes usar tu correo institucional (@udlap.mx)";
+      case "studentId":
+        if (!value) return "El ID del estudiante es obligatorio";
+        if (value.trim().length < 2) {
+          return "El ID debe tener al menos 2 caracteres";
         }
         return "";
       
@@ -47,26 +43,6 @@ export function InternshipApplicationForm({
         const cleanPhone = value.replace(/\D/g, "");
         if (cleanPhone.length !== 10) {
           return "El teléfono debe tener 10 dígitos";
-        }
-        return "";
-      
-      case "startDate":
-        if (!value) return "La fecha de inicio es obligatoria";
-        const selectedDate = new Date(value);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const minDate = new Date(today);
-        minDate.setDate(minDate.getDate() + 7); // Mínimo 7 días de anticipación
-        
-        if (selectedDate < minDate) {
-          return "La fecha debe ser al menos 7 días a partir de hoy";
-        }
-        
-        const maxDate = new Date(today);
-        maxDate.setMonth(maxDate.getMonth() + 6); // Máximo 6 meses adelante
-        
-        if (selectedDate > maxDate) {
-          return "La fecha no puede ser mayor a 6 meses";
         }
         return "";
       
@@ -148,19 +124,34 @@ export function InternshipApplicationForm({
       return;
     }
     
-    // Simular envío
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    onSuccess();
+    // Generar el mensaje de correo
+    const emailSubject = `Solicitud de Práctica - ${formData.studentId}`;
+    const emailBody = `Asunto: Solicitud de Práctica Profesional
+
+ID del Estudiante: ${formData.studentId}
+Empresa de Interés: ${companyName}
+Disponibilidad: ${formData.availability === 'tiempo-completo' ? 'Tiempo Completo (40 hrs/semana)' : formData.availability === 'medio-tiempo' ? 'Medio Tiempo (20 hrs/semana)' : 'Horario Flexible (30 hrs/semana)'}
+
+Motivación y Expectativas:
+${formData.motivation}`;
+    
+    // Crear el mailto link
+    const mailtoLink = `mailto:practicas.profesion@udlap.mx?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+    
+    // Abrir el cliente de correo
+    window.location.href = mailtoLink;
+    
+    // Mostrar un toast informativo
+    toast.success("Abriendo cliente de correo", {
+      description: "Se abrirá tu cliente de correo para enviar la solicitud a practicas.profesion@udlap.mx"
+    });
   };
 
   const isFormValid = Object.values(errors).every(err => !err) && 
-                      Object.values(formData).every(val => val.trim() !== "");
-
-  const today = new Date();
-  const minDate = new Date(today);
-  minDate.setDate(minDate.getDate() + 7);
-  const maxDate = new Date(today);
-  maxDate.setMonth(maxDate.getMonth() + 6);
+                      formData.studentId.trim() !== "" &&
+                      formData.phone.trim() !== "" &&
+                      formData.motivation.trim() !== "" &&
+                      formData.availability !== "";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -184,30 +175,30 @@ export function InternshipApplicationForm({
         </div>
       )}
 
-      {/* Email */}
+      {/* ID del Estudiante */}
       <div>
         <label className="block text-sm font-medium mb-2">
-          Correo Electrónico Institucional <span className="text-destructive">*</span>
+          ID del Estudiante <span className="text-destructive">*</span>
         </label>
         <input
-          type="email"
-          value={formData.email}
-          onChange={(e) => handleChange("email", e.target.value)}
-          onBlur={() => handleBlur("email")}
+          type="text"
+          value={formData.studentId}
+          onChange={(e) => handleChange("studentId", e.target.value)}
+          onBlur={() => handleBlur("studentId")}
           disabled={!requirements.eligible}
           className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
-            errors.email && touched.email
+            errors.studentId && touched.studentId
               ? "border-destructive focus:ring-destructive/20"
-              : "border-gray-300 focus:ring-primary focus:border-transparent"
-          } disabled:bg-gray-100 disabled:cursor-not-allowed`}
-          placeholder="tu.nombre@udlap.mx"
-          aria-invalid={!!(errors.email && touched.email)}
-          aria-describedby={errors.email && touched.email ? "email-error" : undefined}
+              : "border-border focus:ring-primary focus:border-transparent"
+          } disabled:bg-muted disabled:cursor-not-allowed`}
+          placeholder="Tu ID de estudiante"
+          aria-invalid={!!(errors.studentId && touched.studentId)}
+          aria-describedby={errors.studentId && touched.studentId ? "studentId-error" : undefined}
         />
-        {touched.email && errors.email && (
-          <p id="email-error" className="text-sm text-destructive mt-1 flex items-center gap-1">
+        {touched.studentId && errors.studentId && (
+          <p id="studentId-error" className="text-sm text-destructive mt-1 flex items-center gap-1">
             <AlertCircle size={14} />
-            {errors.email}
+            {errors.studentId}
           </p>
         )}
       </div>
@@ -226,8 +217,8 @@ export function InternshipApplicationForm({
           className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
             errors.phone && touched.phone
               ? "border-destructive focus:ring-destructive/20"
-              : "border-gray-300 focus:ring-primary focus:border-transparent"
-          } disabled:bg-gray-100 disabled:cursor-not-allowed`}
+              : "border-border focus:ring-primary focus:border-transparent"
+          } disabled:bg-muted disabled:cursor-not-allowed`}
           placeholder="222 123 4567"
           maxLength={12}
           aria-invalid={!!(errors.phone && touched.phone)}
@@ -247,40 +238,6 @@ export function InternshipApplicationForm({
         )}
       </div>
 
-      {/* Fecha de inicio */}
-      <div>
-        <label className="block text-sm font-medium mb-2">
-          Fecha de Inicio Propuesta <span className="text-destructive">*</span>
-        </label>
-        <input
-          type="date"
-          value={formData.startDate}
-          onChange={(e) => handleChange("startDate", e.target.value)}
-          onBlur={() => handleBlur("startDate")}
-          disabled={!requirements.eligible}
-          min={minDate.toISOString().split("T")[0]}
-          max={maxDate.toISOString().split("T")[0]}
-          className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
-            errors.startDate && touched.startDate
-              ? "border-destructive focus:ring-destructive/20"
-              : "border-gray-300 focus:ring-primary focus:border-transparent"
-          } disabled:bg-gray-100 disabled:cursor-not-allowed`}
-          aria-invalid={!!(errors.startDate && touched.startDate)}
-          aria-describedby={errors.startDate && touched.startDate ? "startDate-error" : "startDate-help"}
-        />
-        {touched.startDate && errors.startDate ? (
-          <p id="startDate-error" className="text-sm text-destructive mt-1 flex items-center gap-1">
-            <AlertCircle size={14} />
-            {errors.startDate}
-          </p>
-        ) : (
-          <p id="startDate-help" className="text-sm text-muted-foreground mt-1 flex items-center gap-1">
-            <Info size={14} />
-            La fecha debe ser entre 7 días y 6 meses a partir de hoy
-          </p>
-        )}
-      </div>
-
       {/* Disponibilidad */}
       <div>
         <label className="block text-sm font-medium mb-2">
@@ -294,8 +251,8 @@ export function InternshipApplicationForm({
           className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
             errors.availability && touched.availability
               ? "border-destructive focus:ring-destructive/20"
-              : "border-gray-300 focus:ring-primary focus:border-transparent"
-          } disabled:bg-gray-100 disabled:cursor-not-allowed`}
+              : "border-border focus:ring-primary focus:border-transparent"
+          } disabled:bg-muted disabled:cursor-not-allowed`}
           aria-invalid={!!(errors.availability && touched.availability)}
         >
           <option value="">Selecciona tu disponibilidad</option>
@@ -326,8 +283,8 @@ export function InternshipApplicationForm({
           className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors resize-none ${
             errors.motivation && touched.motivation
               ? "border-destructive focus:ring-destructive/20"
-              : "border-gray-300 focus:ring-primary focus:border-transparent"
-          } disabled:bg-gray-100 disabled:cursor-not-allowed`}
+              : "border-border focus:ring-primary focus:border-transparent"
+          } disabled:bg-muted disabled:cursor-not-allowed`}
           placeholder="Describe tus motivaciones, intereses y qué esperas aprender..."
           aria-invalid={!!(errors.motivation && touched.motivation)}
           aria-describedby={errors.motivation && touched.motivation ? "motivation-error" : "motivation-help"}
@@ -370,9 +327,10 @@ export function InternshipApplicationForm({
           disabled={!requirements.eligible || !isFormValid}
           className="flex-1"
         >
-          Enviar Solicitud
+          Abrir Correo para Enviar
         </Button>
       </div>
     </form>
   );
 }
+

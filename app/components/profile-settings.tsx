@@ -107,7 +107,7 @@ export function ProfileSettings() {
         
         <div className="space-y-3">
           <div className={`flex items-center gap-3 p-3 rounded-lg ${
-            creditsPercentage >= 70 ? "bg-secondary/10" : "bg-gray-50"
+            creditsPercentage >= 70 ? "bg-secondary/10" : "bg-background"
           }`}>
             {creditsPercentage >= 70 ? (
               <CheckCircle className="text-secondary flex-shrink-0" size={20} />
@@ -125,7 +125,7 @@ export function ProfileSettings() {
           </div>
 
           <div className={`flex items-center gap-3 p-3 rounded-lg ${
-            profile.gpa >= 7.0 ? "bg-secondary/10" : "bg-gray-50"
+            profile.gpa >= 7.0 ? "bg-secondary/10" : "bg-background"
           }`}>
             {profile.gpa >= 7.0 ? (
               <CheckCircle className="text-secondary flex-shrink-0" size={20} />
@@ -143,7 +143,7 @@ export function ProfileSettings() {
           </div>
 
           <div className={`flex items-center gap-3 p-3 rounded-lg ${
-            profile.hasActiveInsurance ? "bg-secondary/10" : "bg-gray-50"
+            profile.hasActiveInsurance ? "bg-secondary/10" : "bg-background"
           }`}>
             {profile.hasActiveInsurance ? (
               <CheckCircle className="text-secondary flex-shrink-0" size={20} />
@@ -159,7 +159,7 @@ export function ProfileSettings() {
           </div>
 
           <div className={`flex items-center gap-3 p-3 rounded-lg ${
-            profile.hasCompletedRequiredCourses ? "bg-secondary/10" : "bg-gray-50"
+            profile.hasCompletedRequiredCourses ? "bg-secondary/10" : "bg-background"
           }`}>
             {profile.hasCompletedRequiredCourses ? (
               <CheckCircle className="text-secondary flex-shrink-0" size={20} />
@@ -192,7 +192,7 @@ export function ProfileSettings() {
                 value={isEditing ? editedProfile.email : profile.email}
                 onChange={(e) => setEditedProfile({...editedProfile, email: e.target.value})}
                 disabled={!isEditing}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-gray-100"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-muted"
               />
             </div>
             <div>
@@ -203,7 +203,7 @@ export function ProfileSettings() {
                 onChange={(e) => setEditedProfile({...editedProfile, phone: e.target.value})}
                 disabled={!isEditing}
                 placeholder="222 123 4567"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-gray-100"
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary disabled:bg-muted"
               />
             </div>
           </div>
@@ -238,3 +238,4 @@ export function ProfileSettings() {
     </div>
   );
 }
+

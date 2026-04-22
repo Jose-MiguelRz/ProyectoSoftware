@@ -9,7 +9,7 @@ export const SPACING = {
 } as const;
 
 export const CARD_STYLES = {
-  base: "bg-white rounded-lg shadow-sm",
+  base: "bg-card rounded-lg shadow-sm",
   hover: "hover:shadow-md transition-shadow",
   padding: {
     sm: "p-4",
@@ -21,9 +21,9 @@ export const CARD_STYLES = {
 export const BUTTON_STYLES = {
   base: "flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all",
   variants: {
-    primary: "bg-primary hover:bg-primary/90 text-white disabled:bg-gray-300 disabled:cursor-not-allowed",
-    secondary: "bg-secondary hover:bg-secondary/90 text-white disabled:bg-gray-300 disabled:cursor-not-allowed",
-    outline: "border border-gray-300 hover:bg-gray-50 disabled:bg-gray-100 disabled:cursor-not-allowed",
+    primary: "bg-primary hover:bg-primary/90 text-white disabled:bg-muted disabled:cursor-not-allowed",
+    secondary: "bg-secondary hover:bg-secondary/90 text-white disabled:bg-muted disabled:cursor-not-allowed",
+    outline: "border border-border hover:bg-muted disabled:bg-muted disabled:cursor-not-allowed",
     ghost: "text-primary hover:underline"
   },
   sizes: {

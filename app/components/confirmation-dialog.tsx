@@ -45,7 +45,7 @@ export function ConfirmationDialog({
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/50 z-50 animate-in fade-in" />
-        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl p-6 w-full max-w-md z-50 animate-in fade-in zoom-in">
+        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-card rounded-lg shadow-xl p-6 w-full max-w-md z-50 animate-in fade-in zoom-in">
           <div className="flex items-start gap-4 mb-4">
             <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
               variant === "danger" ? "bg-destructive/10" : 
@@ -70,7 +70,7 @@ export function ConfirmationDialog({
           <div className="flex gap-3 justify-end mt-6">
             <Dialog.Cancel asChild>
               <button
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 border border-border rounded-lg hover:bg-background transition-colors"
                 disabled={isLoading}
               >
                 {cancelText}
@@ -93,3 +93,4 @@ export function ConfirmationDialog({
     </Dialog.Root>
   );
 }
+

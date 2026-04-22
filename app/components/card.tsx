@@ -18,3 +18,4 @@ export function Card({ children, padding = "md", hover = false, className = "" }
     </div>
   );
 }
+
