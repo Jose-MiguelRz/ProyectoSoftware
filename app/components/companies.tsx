@@ -1,0 +1,397 @@
+import { useState, useEffect } from "react";
+import { Building2, MapPin, DollarSign, Clock, Users, Filter, RotateCcw, AlertCircle, Search } from "lucide-react";
+import { Breadcrumbs } from "./breadcrumbs";
+import { Button } from "./button";
+import { Card } from "./card";
+import { InternshipApplicationForm } from "./internship-application-form";
+import { useStudentProfile } from "./student-profile-provider";
+import { useDatabase } from "./database-provider";
+import { useAccessibility } from "./accessibility-provider";
+import { translate } from "../constants/translations";
+import * as Dialog from "@radix-ui/react-dialog";
+import { toast } from "sonner";
+import { TOAST_MESSAGES, ACTIONS } from "../constants/design-tokens";
+import { Company } from "../constants/database";
+
+export function Companies() {
+  const { profile, meetsInternshipRequirements, updateProfile } = useStudentProfile();
+  const { language } = useAccessibility();
+  const db = useDatabase();
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>(() => {
+    return localStorage.getItem("companies-search") || "";
+  });
+  const [filterIndustry, setFilterIndustry] = useState<string>(() => {
+    return localStorage.getItem("companies-filter-industry") || "all";
+  });
+  const [filterPaid, setFilterPaid] = useState<string>(() => {
+    return localStorage.getItem("companies-filter-paid") || "all";
+  });
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  const [isApplicationOpen, setIsApplicationOpen] = useState(false);
+
+  // Cargar empresas desde la base de datos
+  useEffect(() => {
+    const loadedCompanies = db.getCompanies();
+    setCompanies(loadedCompanies);
+  }, [db]);
+
+  // Guardar búsqueda y filtros en localStorage
+  useEffect(() => {
+    localStorage.setItem("companies-search", searchTerm);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    localStorage.setItem("companies-filter-industry", filterIndustry);
+    localStorage.setItem("companies-filter-paid", filterPaid);
+  }, [filterIndustry, filterPaid]);
+
+  const industryOptions = Array.from(
+    new Map(
+      companies.map((company) => [
+        company.industry,
+        language === "es" ? company.industry : company.industryEn || company.industry,
+      ]),
+    ),
+  );
+
+  const filteredCompanies = companies.filter((company) => {
+    const companyDescription =
+      language === "es" ? company.description : company.descriptionEn || company.description;
+    const companyIndustry =
+      language === "es" ? company.industry : company.industryEn || company.industry;
+    const companyLocation =
+      language === "es" ? company.location : company.locationEn || company.location;
+    const lowerSearch = searchTerm.toLowerCase();
+
+    const matchesSearch =
+      searchTerm === "" ||
+      company.name.toLowerCase().includes(lowerSearch) ||
+      companyIndustry.toLowerCase().includes(lowerSearch) ||
+      companyLocation.toLowerCase().includes(lowerSearch) ||
+      companyDescription.toLowerCase().includes(lowerSearch);
+    const matchesIndustry = filterIndustry === "all" || company.industry === filterIndustry;
+    const matchesPaid =
+      filterPaid === "all" ||
+      (filterPaid === "paid" && company.paid) ||
+      (filterPaid === "unpaid" && !company.paid);
+    return matchesSearch && matchesIndustry && matchesPaid;
+  });
+
+  const handleApply = (company: Company) => {
+    setSelectedCompany(company);
+    setIsApplicationOpen(true);
+  };
+
+  const handleApplicationSuccess = async () => {
+    if (!selectedCompany) return;
+    
+    // Actualizar estado del estudiante
+    updateProfile({
+      currentInternship: {
+        company: selectedCompany.name,
+        status: "pending"
+      }
+    });
+    
+    setIsApplicationOpen(false);
+    
+    const message = TOAST_MESSAGES.success.solicitudEnviada(selectedCompany.name);
+    toast.success(message.title, {
+      description: message.description,
+      action: {
+        label: ACTIONS.deshacer,
+        onClick: () => {
+          updateProfile({
+            currentInternship: {
+              company: "",
+              status: "none"
+            }
+          });
+          toast.info(translate(language, "companiesMessages.cancelSuccessTitle"), {
+            description: translate(language, "companiesMessages.cancelSuccessDescription")
+          });
+        }
+      }
+    });
+    
+    setSelectedCompany(null);
+  };
+
+  const handleClearFilters = () => {
+    setSearchTerm("");
+    setFilterIndustry("all");
+    setFilterPaid("all");
+    toast.info(translate(language, "companiesMessages.clearFilters"), {
+      description: translate(language, "companiesMessages.clearFiltersDescription")
+    });
+  };
+
+  const requirements = meetsInternshipRequirements();
+
+  return (
+    <div className="max-w-7xl mx-auto space-y-6">
+      <Breadcrumbs />
+      
+      <div>
+        <h1 className="text-3xl mb-2">{translate(language, "companiesMessages.title")}</h1>
+        <p className="text-muted-foreground">
+          {translate(language, "companiesMessages.description")}
+        </p>
+      </div>
+
+      {/* Requirements Warning */}
+      {!requirements.eligible && (
+        <Card className="bg-muted border-l-4 border-primary">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="text-primary flex-shrink-0 mt-0.5" size={20} />
+            <div>
+              <h3 className="font-medium text-foreground mb-2">{translate(language, "companiesMessages.unmetRequirements")}</h3>
+              <p className="text-sm text-muted-foreground mb-2">
+                {translate(language, "companiesMessages.unmetRequirementsDescription")}
+              </p>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                {requirements.reasons.map((reason, idx) => (
+                  <li key={idx}>• {reason}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {/* Current Application Status */}
+      {profile.currentInternship.status === "pending" && (
+        <Card className="bg-muted border-l-4 border-primary">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h3 className="font-medium text-foreground mb-1">{translate(language, "companiesMessages.applicationStatus")}</h3>
+              <p className="text-sm text-muted-foreground">
+                {translate(language, "companiesMessages.applicationStatusDescription")} <strong>{profile.currentInternship.company}</strong>
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                updateProfile({
+                  currentInternship: {
+                    company: "",
+                    status: "none"
+                  }
+                });
+                // Limpiar también el formulario guardado
+                const storageKey = `internship-form-${profile.currentInternship.company}`;
+                localStorage.removeItem(storageKey);
+                toast.success(translate(language, "companiesMessages.cancelSuccessTitle"), {
+                  description: translate(language, "companiesMessages.cancelSuccessDescription")
+                });
+              }}
+            >
+              {translate(language, "internship.cancel")}
+            </Button>
+          </div>
+        </Card>
+      )}
+
+      {/* Search Bar */}
+      <Card>
+        <div className="flex items-center gap-2 mb-2">
+          <Search size={20} className="text-primary" />
+          <h2 className="text-lg">{translate(language, "companiesMessages.searchTitle")}</h2>
+        </div>
+        <div className="relative">
+          <input
+            type="text"
+            placeholder={translate(language, "companies.search")}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-3 bg-input-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+          />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-muted-foreground transition-colors"
+              aria-label={translate(language, "companiesMessages.clearSearch")}
+            >
+              <RotateCcw size={16} />
+            </button>
+          )}
+        </div>
+      </Card>
+
+      {/* Filters */}
+      <Card>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Filter size={20} className="text-primary" />
+            <h2 className="text-lg">{translate(language, "companiesMessages.filterTitle")}</h2>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="text-sm text-muted-foreground">
+              <span className="font-medium text-foreground">{filteredCompanies.length}</span> {filteredCompanies.length === 1 ? translate(language, 'common.search') : translate(language, 'companies.title')}
+            </div>
+            {(searchTerm !== "" || filterIndustry !== "all" || filterPaid !== "all") && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleClearFilters}
+                icon={<RotateCcw size={14} />}
+              >
+                {translate(language, 'common.filter')}
+              </Button>
+            )}
+          </div>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm mb-2">{translate(language, "companies.industry")}</label>
+            <select
+              value={filterIndustry}
+              onChange={(e) => setFilterIndustry(e.target.value)}
+              className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-card"
+            >
+              <option value="all">{translate(language, "common.noResults")}</option>
+              {industryOptions.map(([industryKey, industryLabel]) => (
+                <option key={industryKey} value={industryKey}>
+                  {industryLabel}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm mb-2">{translate(language, "internship.availability")}</label>
+            <select
+              value={filterPaid}
+              onChange={(e) => setFilterPaid(e.target.value)}
+              className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-card"
+            >
+              <option value="all">{translate(language, "common.noResults")}</option>
+              <option value="paid">{translate(language, "internship.fullTime")}</option>
+              <option value="unpaid">{translate(language, "internship.partTime")}</option>
+            </select>
+          </div>
+        </div>
+      </Card>
+
+      {/* Companies Grid */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        {filteredCompanies.map((company) => (
+          <Card key={company.id} hover>
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center">
+                  <Building2 className="text-secondary" size={24} />
+                </div>
+                <div>
+                  <h3 className="text-lg">{company.name}</h3>
+                  <span className="text-sm text-muted-foreground">
+                    {language === "es" ? company.industry : company.industryEn || company.industry}
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 items-end">
+                <span
+                  className={`px-3 py-1 rounded-full text-xs ${
+                    company.paid
+                      ? "bg-secondary/10 text-secondary"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  {company.paid
+                    ? translate(language, "companiesMessages.paid")
+                    : translate(language, "companiesMessages.unpaid")}
+                </span>
+                {company.positions && company.positions <= 2 && (
+                  <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                    {translate(language, "companiesMessages.limitedSpots")}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <p className="text-muted-foreground mb-4 leading-relaxed">
+              {language === "es" ? company.description : company.descriptionEn || company.description}
+            </p>
+
+            <div className="grid grid-cols-2 gap-3 pt-4 border-t border-border">
+              <div className="flex items-center gap-2 text-sm">
+                <MapPin size={16} className="text-muted-foreground" />
+                <span>{language === "es" ? company.location : company.locationEn || company.location}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <Users size={16} className="text-muted-foreground" />
+                <span>
+                  {company.positions} {translate(language, "companiesMessages.positions")}
+                </span>
+              </div>
+              {company.hours && (
+                <div className="flex items-center gap-2 text-sm">
+                  <Clock size={16} className="text-muted-foreground" />
+                  <span>{language === "es" ? company.hours : company.hoursEn || company.hours}</span>
+                </div>
+              )}
+              {company.paid && (
+                <div className="flex items-center gap-2 text-sm">
+                  <DollarSign size={16} className="text-secondary" />
+                  <span className="text-secondary">
+                    {translate(language, "companiesMessages.scholarship")}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            <Button
+              variant="primary"
+              className="w-full mt-4"
+              onClick={() => handleApply(company)}
+              disabled={!requirements.eligible || profile.currentInternship.status === "pending" || profile.currentInternship.status === "active"}
+            >
+              {profile.currentInternship.status === "pending" 
+                ? translate(language, "companiesMessages.applicationStatus")
+                : profile.currentInternship.status === "active"
+                ? translate(language, "internship.requirements.activeInternship")
+                : translate(language, "common.apply")}
+            </Button>
+          </Card>
+        ))}
+      </div>
+
+      {filteredCompanies.length === 0 && (
+        <Card className="text-center py-12">
+          <p className="text-muted-foreground mb-4">{translate(language, "common.noResults")}</p>
+          <Button variant="ghost" onClick={handleClearFilters}>
+            {translate(language, 'common.filter')}
+          </Button>
+        </Card>
+      )}
+
+      {/* Application Dialog */}
+      <Dialog.Root open={isApplicationOpen} onOpenChange={setIsApplicationOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 bg-black/50 z-50 animate-in fade-in" />
+          <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-card rounded-lg shadow-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto z-50 animate-in fade-in zoom-in">
+            <Dialog.Title className="text-2xl mb-2">
+              {translate(language, "internship.title")} {selectedCompany?.name}
+            </Dialog.Title>
+            <Dialog.Description className="text-sm text-muted-foreground mb-6">
+              {translate(language, "internship.motivationPlaceholder")}
+            </Dialog.Description>
+            
+            {selectedCompany && (
+              <InternshipApplicationForm
+                companyName={selectedCompany.name}
+                onSuccess={handleApplicationSuccess}
+                onCancel={() => {
+                  setIsApplicationOpen(false);
+                  setSelectedCompany(null);
+                }}
+              />
+            )}
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </div>
+  );
+}
